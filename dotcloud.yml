@@ -1,5 +1,7 @@
 server:
   type: nodejs
   approot: approot
+  config:
+       node_version: v0.8.x
 db:
   type: mongodb

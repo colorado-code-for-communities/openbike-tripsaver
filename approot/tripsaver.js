@@ -1,13 +1,9 @@
-/* Before we begin, prepare to use nano to write to CouchDB, create a reference to particular
- * database we'll be using. Prepare to use querystring to parse the POST data, and of course
- * prepare to use the HTTP library
- */
-
 var qs = require('querystring');
 var http = require('http');
 var tracks = require('nano')('https://ougeremseratontsedisamen:QLbVnxIDp0cHSqGgtOiMDyCR@openbike.cloudant.com/openbike');
 
 http.createServer(function (req, res) {
+
   // Only process POST requests (below, if non-POST, we show a debug form)
   if (req.method === "POST") {
     var body = "";
@@ -53,6 +49,3 @@ http.createServer(function (req, res) {
     res.end(dummyHTML);
   }
 }).listen(8080);
-
-console.log('Server running on port 8080');
- 

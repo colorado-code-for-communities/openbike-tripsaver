@@ -2,6 +2,8 @@
   "name": "tripsaver",
   "version": "1.0.0",
   "dependencies": {
-    "mongodb": "0.9.6-8"
+    "mongodb": "",
+    "nano": "",
+    "querystring": ""
   }
 }
