@@ -1,6 +1,7 @@
 var qs = require('querystring');
 var http = require('http');
-var tracks = require('nano')('https://ougeremseratontsedisamen:QLbVnxIDp0cHSqGgtOiMDyCR@openbike.cloudant.com/openbike');
+var config = require('./config');
+var tracks = require('nano')('https://'+config.couch.user+':'+config.couch.pass+'@openbike.cloudant.com/openbike');
 
 http.createServer(function (req, res) {
 
@@ -31,9 +32,16 @@ http.createServer(function (req, res) {
         // Create a (probably) unique name for 
         var epoch = new Date().getTime().toString() + '_' + ( Math.floor( Math.random() * 1000 ) + 1 );
         console.log(epoch);
-        tracks.insert(couchInput, epoch, function (err, body) { if (err) console.error(err); });
-        res.writeHead(200, {'Content-Type': 'application/json'});
-        res.write( '{"status":"success"}' );
+        tracks.insert(couchInput, epoch, function (err, body) {
+          if (err) { 
+            console.error(err);
+            res.writeHead( 500, {'Content-Type': 'application/json'});
+            res.write( '{ "status":"error", "msg":"database error" }' );
+            return;
+          }
+          res.writeHead(200, {'Content-Type': 'application/json'});
+          res.write( '{"status":"success"}' );
+        });
       }
     });
   } else {
